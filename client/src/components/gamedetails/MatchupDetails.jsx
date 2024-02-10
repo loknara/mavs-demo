@@ -46,6 +46,7 @@ const MatchupDetails = ({ game, gameId }) => {
   const awayTeamDetails = findTeamDetails(game.awayTeam);
 
   useEffect(() => {
+    Chart.defaults.font.size = 14;
     if (radarChartRef.current) {
       const radarCtx = radarChartRef.current.getContext("2d");
       const radarChart = new Chart(radarCtx, {
@@ -58,8 +59,8 @@ const MatchupDetails = ({ game, gameId }) => {
             "Opp Efficiency Ranking",
             "Turnover Ranking",
             "Forced Turnovers Ranking",
-            "Free Throws Att. Ranking",
-            "Free Throws Allowed Ranking",
+            "FT Att. Ranking",
+            "FT Allowed Ranking",
           ],
           datasets: [
             {
@@ -100,6 +101,11 @@ const MatchupDetails = ({ game, gameId }) => {
           scales: {
             r: {
               beginAtZero: true,
+              pointLabels: {
+                font: {
+                  size: 14,
+                },
+              },
             },
           },
           elements: {
@@ -122,8 +128,8 @@ const MatchupDetails = ({ game, gameId }) => {
               "Opp Efficiency Rating",
               "Turnover Rating",
               "Forced Turnovers Rating",
-              "Free Throws Att. Rating",
-              "Free Throws Allowed Rating",
+              "FT Att. Rating",
+              "FT Allowed Rating",
             ],
             datasets: [
               {
@@ -179,22 +185,33 @@ const MatchupDetails = ({ game, gameId }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={4}>
         <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
           <Typography variant="h6" component="h2" gutterBottom>
             Team Comparison
           </Typography>
-          <div style={{ height: isMobile ? "250px" : "500px", width: "100%" }}>
+          <div
+            style={{
+              height: isMobile ? "250px" : "500px",
+              width: "100%",
+            }}
+          >
             <canvas ref={radarChartRef}></canvas>
           </div>
         </Paper>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={8}>
         <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
           <Typography variant="h6" component="h2" gutterBottom>
             Team Stats (Column)
           </Typography>
-          <div style={{ height: isMobile ? "250px" : "500px", width: "100%" }}>
+          <div
+            style={{
+              height: isMobile ? "250px" : "500px",
+              width: "100%",
+              fontSize: "",
+            }}
+          >
             <canvas ref={columnChartRef}></canvas>
           </div>
         </Paper>

@@ -31,7 +31,12 @@ const PlayByPlay = ({ gameId }) => {
     return (
       <TableContainer
         component={Paper}
-        style={{ marginTop: "20px", marginBottom: "20px", overflowX: "auto" }}
+        style={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          maxHeight: "400px",
+          overflowY: "auto",
+        }}
       >
         <Table aria-label="play-by-play" stickyHeader>
           <TableHead>

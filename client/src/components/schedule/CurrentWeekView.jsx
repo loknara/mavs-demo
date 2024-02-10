@@ -54,7 +54,7 @@ const CurrentWeekView = ({ games, currentWeekStart, setCurrentWeekStart }) => {
       >
         Prev
       </Button>
-      <div className=" justify-center inline-flex overflow-x-auto w-full">
+      <div className=" inline-flex overflow-x-auto w-full">
         {daysOfCurrentWeek.map((day) => (
           <div
             key={day.toString()}

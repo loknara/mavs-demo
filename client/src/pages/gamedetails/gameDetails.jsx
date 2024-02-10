@@ -66,7 +66,7 @@ const GameDetails = () => {
         <CardContent>
           <GameHeader game={game} quarterScores={quarterScores} />
           <div className="bg-gray-100 rounded-3xl">
-            <div className="flex flex-wrap justify-around items-center bg-gray-100 h-auto py-2 rounded-3xl">
+            <div className="flex flex-wrap justify-around items-center bg-gray-100 h-auto py-2 rounded-3xl font-bold text-xl">
               {[
                 "matchup-details",
                 "box-score",
