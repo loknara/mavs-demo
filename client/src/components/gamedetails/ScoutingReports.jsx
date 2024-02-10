@@ -1,6 +1,3 @@
-// Scouting report dipslays any currently existing reports for the respective game
-// and allows to add new ones
-
 import React, { useState, useEffect } from "react";
 import {
   TextField,
@@ -15,13 +12,14 @@ import {
   Typography,
   Button,
   Grid,
+  IconButton,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import gameData from "../../gameData.json";
 
 const ScoutingReports = ({ game, gameId }) => {
   const [scoutingReports, setScoutingReports] = useState([]);
 
-  // Initialize scoutingReports with existing reports for the game
   useEffect(() => {
     const existingReports = gameData.scoutingReports.filter(
       (report) => report.nbaGameId === gameId
@@ -40,23 +38,34 @@ const ScoutingReports = ({ game, gameId }) => {
   const renderScoutingReports = () => {
     return scoutingReports.map((report, index) => (
       <Card key={index} style={{ marginBottom: "10px" }}>
-        {" "}
-        {/* Use index as key if nbaId is not unique */}
         <CardContent>
           <Typography variant="h6">{report.name}</Typography>
           <Typography variant="body1">{report.report}</Typography>
           <Typography variant="body2">Scout: {report.scout}</Typography>
+          <IconButton
+            aria-label="delete"
+            onClick={() => handleRemoveScoutingReport(index)}
+          >
+            <DeleteIcon />
+          </IconButton>
         </CardContent>
       </Card>
     ));
   };
 
   const handleAddScoutingReport = () => {
-    // Add the new scouting report to the list
+    if (
+      !newScoutReport.scout ||
+      !newScoutReport.name ||
+      !newScoutReport.report
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     const updatedReports = [...scoutingReports, newScoutReport];
     setScoutingReports(updatedReports);
 
-    // Reset the form for the next input
     setNewScoutReport({
       nbaGameId: gameId,
       scout: "",
@@ -69,6 +78,12 @@ const ScoutingReports = ({ game, gameId }) => {
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setNewScoutReport({ ...newScoutReport, [name]: value });
+  };
+
+  const handleRemoveScoutingReport = (index) => {
+    const updatedReports = [...scoutingReports];
+    updatedReports.splice(index, 1);
+    setScoutingReports(updatedReports);
   };
 
   const players = gameData.playerStats.filter(
@@ -87,7 +102,7 @@ const ScoutingReports = ({ game, gameId }) => {
       {renderScoutingReports()}
 
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal" required>
           <InputLabel id="player-select-label">Player</InputLabel>
           <Select
             labelId="player-select-label"
@@ -96,7 +111,6 @@ const ScoutingReports = ({ game, gameId }) => {
             label="Player"
             name="name"
             onChange={handleFormChange}
-            required
           >
             {players.map((player) => (
               <MenuItem key={player.name} value={player.name}>
