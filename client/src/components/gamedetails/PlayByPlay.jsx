@@ -1,5 +1,3 @@
-// Play by play shows all the games action, and allows for you to even view the plays by just the quarter
-
 import React, { useState } from "react";
 import {
   Table,
@@ -9,16 +7,18 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Tabs,
-  Tab,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import gameData from "../../gameData.json";
 
 const PlayByPlay = ({ gameId }) => {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
 
-  const handlePeriodChange = (event, newValue) => {
-    setSelectedPeriod(newValue);
+  const handlePeriodChange = (event) => {
+    setSelectedPeriod(event.target.value);
   };
 
   const renderPlayByPlay = () => {
@@ -31,9 +31,9 @@ const PlayByPlay = ({ gameId }) => {
     return (
       <TableContainer
         component={Paper}
-        style={{ marginTop: "20px", marginBottom: "20px", maxHeight: "620px" }}
+        style={{ marginTop: "20px", marginBottom: "20px", overflowX: "auto" }}
       >
-        <Table aria-label="play-by-play">
+        <Table aria-label="play-by-play" stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>Period</TableCell>
@@ -62,22 +62,26 @@ const PlayByPlay = ({ gameId }) => {
   };
 
   return (
-    <TableContainer
-      component={Paper}
-      style={{
-        marginTop: "20px",
-        marginBottom: "20px",
-        maxHeight: "620px",
-      }}
-    >
-      <Tabs value={selectedPeriod} onChange={handlePeriodChange} centered>
-        <Tab label="All Periods" value={0} />
-        {[1, 2, 3, 4].map((period) => (
-          <Tab key={period} label={`Period ${period}`} value={period} />
-        ))}
-      </Tabs>
+    <div>
+      <FormControl fullWidth style={{ marginBottom: "20px" }}>
+        <InputLabel id="period-select-label">Period</InputLabel>
+        <Select
+          labelId="period-select-label"
+          id="period-select"
+          value={selectedPeriod}
+          label="Period"
+          onChange={handlePeriodChange}
+        >
+          <MenuItem value={0}>All Periods</MenuItem>
+          {[1, 2, 3, 4].map((period) => (
+            <MenuItem key={period} value={period}>
+              Period {period}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       {renderPlayByPlay()}
-    </TableContainer>
+    </div>
   );
 };
 

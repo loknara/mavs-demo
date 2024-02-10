@@ -87,7 +87,7 @@ const Navbar = () => {
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 },
         }}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
       >
         {drawer}
