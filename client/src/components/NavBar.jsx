@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const drawer = (
     <List>
-      {["Home", "Schedule", "Scouting Report"].map((text) => (
+      {["Home", "Schedule"].map((text) => (
         <ListItem button key={text} onClick={() => setMobileOpen(false)}>
           <Link
             to={`/${
